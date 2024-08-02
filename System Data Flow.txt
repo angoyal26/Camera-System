@@ -1,0 +1,29 @@
+System Flow
+
+1.  The camera will capture the event as an image and pass it to the prepared Request handler at the client handler. 
+
+2.  All the multiple clients send their requests to the server which is received by the load balancer.
+
+3.  The load balancer will maintain the load and scalability of the system and pass the request to the server container.
+
+4.  The server controller receives the request.
+
+5.  ReceiverController receives the request and perform the basic validation. Example data is present or not, callback URLs are available.
+
+6.  ReceiverController pass the request to the process service.
+
+7.  ProcessService will get a request process it and emit the output to the Kafka priority queue. 
+
+8.  ConsumerService will consume the recorded image request from the Kafka priority queue according to their urgencyType.
+
+9.  ConsumerService will process the records and check the output where they are success or failed.
+
+10. CallBackService will used to send the response to the client as per their status(success or failure).
+
+11. Client Receives the response and show them as per their status.
+
+
+ 
+
+
+  

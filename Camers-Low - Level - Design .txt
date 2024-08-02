@@ -1,0 +1,82 @@
+Low - Level - Design 
+
+1. Prepare Request :
+
+	Request Parameters : 
+
+{
+ requestID, clientID, urgencyType, timestamp, successCallbackUrl, failureCallbackUrl, Optional-eventPurpose, imageData
+
+}
+
+Methods:
+ PreapareRequest();
+
+
+2. ReceiverController: 
+
+this will provide basic validation logic 
+
+url -: base_url+/capture-image , type = post 
+
+method : 
+receiveImage(Request request)
+validate(resuest):- check the received request parameters available or not.
+
+
+3. Process Service:
+	1. create a async event using thread creation or executor service. 
+
+	method
+	processImage():- used to process the image and check its status of capturing or not.
+	submitEvent(): this is used to emit the request to the Kafka priority queue.   
+
+4. ProcessConsumer :
+
+	1. it is used to consume request on the basis or there urgency level. 
+	2. it will process the captured image output and pass it to the callback sender.
+
+	methods 
+	requestConsumer();
+
+5. callbackService :
+
+	this is used to send the response output to the client.
+	 
+	methods :- sendResponse(response);
+
+Response class {
+
+int status: 200,204,500 ---.,
+data: // data which need to be send to the client
+message: // response message  
+
+}
+
+
+6. Callback Handler:- it will process the response received from the server and pass it to the success/failure response messenger.
+
+
+Other class 
+
+Enum UrgencyType{
+High,Medium,Low
+}   
+	
+  
+
+Constraints:
+1. Request Params should be in proper format, And has to be available.
+2. Output response is standard response class always.
+
+Note:
+1. This system can change priority levels anytime in future as per the requirement.
+2. Can modify the callback response as per the client URLs provided.
+3. Can scale as usage load Balancer and executor service to process the request.
+
+ 
+
+
+
+
+

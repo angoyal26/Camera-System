@@ -1,0 +1,58 @@
+1. Captured Image :
+	Responsibility:- 
+		This is a camera event capture system. It is used to capture the event(view) as an image and send it to the system.
+
+
+2. Prepare Request / Sender :
+	Responsibility:- 
+			a. This is a request manager used to prepare the request.
+			b. It receives requests from multiple camera events and processes them to prepare requests.
+			c. It Sends the prepared request to the server where it will process further.
+
+3. Load Balancer : 
+	Responsibility:- 
+		
+			a. This is used to maintain the load on the server and manage peak load.
+
+4. Receiver Controller :
+	Responsibility:- 
+			a. This is a server controller which receives the request from the client sender.
+			b. This will do basic validation on the received request and pass it to the Process service.
+			
+
+4. Process Service/Kafka Producer :
+	Responsibility:- 
+			a. This will used to process the incoming requests and produce them to the Kafka Priority Queue.
+
+5. Kafka Priority Queue:
+   	Responsibility:- 
+			a. This queue will allow consumers to process high-priority records first then low-priority records.
+
+
+
+6. Kafka Consumer:
+   	Responsibility:- 
+			a. This will used to get(consume) records present in the Kafka queue as per their priority sequence.
+ 
+
+7. Callback Service:
+	Responsibility:- 
+			a. This is used to identify the process result and send them their respective callback URLs.
+
+8. Callback Handler:
+	Responsibility:-
+			a. This is used to receive the callback response from the server.
+			b. identify the message and show them on their respective channel success callback / failure callback
+
+9. Success Callback:
+	Responsibility:-
+			a. This is used to show the success callback response message.
+
+9. Failure Callback:
+	Responsibility:-
+			a. This is used to show the failure callback response message.
+
+
+
+
+ 
